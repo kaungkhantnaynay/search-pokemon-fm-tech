@@ -25,7 +25,7 @@ export function PokemonCard({ pokemon }: PokemonCardProps) {
     };
 
     return (
-        <button
+        <div
             onClick={handleClick}
             className="group relative flex flex-col items-center p-4 md:p-6 rounded-2xl md:rounded-3xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl text-left w-full"
         >
@@ -50,6 +50,6 @@ export function PokemonCard({ pokemon }: PokemonCardProps) {
                 </h3>
                 <ChevronRight className="h-4 w-4 text-gray-500 group-hover:text-blue-300 transform group-hover:translate-x-1 transition-all" />
             </div>
-        </button>
+        </div>
     );
 }
