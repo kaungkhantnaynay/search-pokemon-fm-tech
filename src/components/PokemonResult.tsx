@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useQuery } from '@apollo/client/react';
 import { useSearchParams } from 'next/navigation';
 import { GET_POKEMON } from '@/graphql/queries';
@@ -110,7 +111,7 @@ export function PokemonResult({ name }: { name: string | null }) {
 
     return (
         <div className="space-y-12 pb-20 animate-in fade-in slide-in-from-bottom-8 duration-700">
-            {/* Main Stats Header */}
+            {/* Main Stats */}
             <div className="relative overflow-hidden rounded-3xl md:rounded-[2.5rem] bg-white/5 backdrop-blur-2xl border border-white/10 p-6 md:p-12 shadow-2xl">
                 <div className="absolute top-0 right-0 p-4 md:p-8 text-6xl md:text-8xl font-black text-white/5 select-none touch-none">
                     #{pokemon.number}
@@ -120,9 +121,12 @@ export function PokemonResult({ name }: { name: string | null }) {
                     <div className="flex justify-center">
                         <div className="relative group">
                             <div className="absolute inset-0 bg-blue-500/20 blur-[80px] rounded-full group-hover:bg-blue-500/30 transition-all duration-700" />
-                            <img
+                            <Image
                                 src={pokemon.image}
                                 alt={pokemon.name}
+                                width={288}
+                                height={288}
+                                priority
                                 className="relative w-72 h-72 object-contain drop-shadow-[0_20px_50px_rgba(0,0,0,0.5)] transform group-hover:scale-110 transition-transform duration-700 ease-out"
                             />
                         </div>

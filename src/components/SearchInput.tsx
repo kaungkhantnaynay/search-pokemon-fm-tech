@@ -58,7 +58,7 @@ export function SearchInput() {
                 </button>
             )}
 
-            {/* Recent Searches Dropdown */}
+            {/* Recent Searches */}
             {!inputValue && recent.length > 0 && (
                 <div className="absolute top-full left-0 right-0 mt-4 p-4 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl animate-in fade-in slide-in-from-top-2 duration-300">
                     <div className="flex items-center justify-between mb-3 px-2">

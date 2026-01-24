@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ChevronRight } from 'lucide-react';
 
@@ -34,9 +35,11 @@ export function PokemonCard({ pokemon }: PokemonCardProps) {
 
             <div className="relative mb-4">
                 <div className="absolute inset-0 bg-blue-500/10 blur-2xl rounded-full scale-0 group-hover:scale-110 transition-transform duration-700" />
-                <img
+                <Image
                     src={pokemon.image}
                     alt={pokemon.name}
+                    width={128}
+                    height={128}
                     className="relative w-24 h-24 md:w-32 md:h-32 object-contain drop-shadow-lg group-hover:scale-110 transition-transform duration-500"
                 />
             </div>
