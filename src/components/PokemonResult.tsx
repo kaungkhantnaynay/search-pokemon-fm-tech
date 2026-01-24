@@ -32,9 +32,45 @@ interface PokemonData {
         };
         weaknesses: string[];
         fleeRate: number;
+        maxCP: number;
+        maxHP: number;
         image: string;
+        evolutionRequirements?: {
+            amount: number;
+            name: string;
+        };
         evolutions: Array<{ id: string; number: string; name: string; image: string }>;
     } | null;
+}
+
+function PokemonEvolutions({ evolutions, requirements }: {
+    evolutions: Array<{ id: string; number: string; name: string; image: string }> | null,
+    requirements?: { amount: number; name: string }
+}) {
+    if (!evolutions || evolutions.length === 0) return null;
+
+    return (
+        <section className="space-y-8">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div className="flex items-center gap-3">
+                    <Zap className="h-8 w-8 text-amber-400" />
+                    <h2 className="text-4xl font-black text-white tracking-tight">Next Evolutions</h2>
+                </div>
+                {requirements && (
+                    <div className="px-6 py-3 rounded-2xl bg-amber-400/10 border border-amber-400/20 backdrop-blur-md">
+                        <p className="text-amber-300 text-sm font-bold uppercase tracking-widest">
+                            Evolution Cost: <span className="text-white ml-2">{requirements.amount} {requirements.name}</span>
+                        </p>
+                    </div>
+                )}
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                {evolutions.map((evolution: any) => (
+                    <PokemonCard key={evolution.id} pokemon={evolution} />
+                ))}
+            </div>
+        </section>
+    );
 }
 
 export function PokemonResult({ name }: { name: string | null }) {
@@ -121,6 +157,14 @@ export function PokemonResult({ name }: { name: string | null }) {
                             <div className="p-4 md:p-6 rounded-2xl md:rounded-3xl bg-white/5 border border-white/10 hover:border-white/20 transition-colors">
                                 <p className="text-gray-400 text-[10px] md:text-sm font-bold uppercase tracking-widest mb-1">Height</p>
                                 <p className="text-lg md:text-2xl font-bold text-white tracking-tight">{pokemon.height.minimum} - {pokemon.height.maximum}</p>
+                            </div>
+                            <div className="p-4 md:p-6 rounded-2xl md:rounded-3xl bg-white/5 border border-white/10 hover:border-white/20 transition-colors">
+                                <p className="text-gray-400 text-[10px] md:text-sm font-bold uppercase tracking-widest mb-1">Max CP</p>
+                                <p className="text-lg md:text-2xl font-bold text-white tracking-tight">{pokemon.maxCP}</p>
+                            </div>
+                            <div className="p-4 md:p-6 rounded-2xl md:rounded-3xl bg-white/5 border border-white/10 hover:border-white/20 transition-colors">
+                                <p className="text-gray-400 text-[10px] md:text-sm font-bold uppercase tracking-widest mb-1">Max HP</p>
+                                <p className="text-lg md:text-2xl font-bold text-white tracking-tight">{pokemon.maxHP}</p>
                             </div>
                             <div className="p-4 md:p-6 rounded-2xl md:rounded-3xl bg-white/5 border border-white/10 hover:border-white/20 transition-colors sm:col-span-2">
                                 <p className="text-gray-400 text-[10px] md:text-sm font-bold uppercase tracking-widest mb-1">Flee Rate</p>
@@ -215,19 +259,7 @@ export function PokemonResult({ name }: { name: string | null }) {
             </section>
 
             {/* Evolutions */}
-            {pokemon.evolutions && pokemon.evolutions.length > 0 && (
-                <section className="space-y-8">
-                    <div className="flex items-center gap-3">
-                        <Zap className="h-8 w-8 text-amber-400" />
-                        <h2 className="text-4xl font-black text-white tracking-tight">Next Evolutions</h2>
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-                        {pokemon.evolutions.map((evolution: any) => (
-                            <PokemonCard key={evolution.id} pokemon={evolution} />
-                        ))}
-                    </div>
-                </section>
-            )}
+            <PokemonEvolutions evolutions={pokemon.evolutions} requirements={pokemon.evolutionRequirements} />
         </div>
     );
 }

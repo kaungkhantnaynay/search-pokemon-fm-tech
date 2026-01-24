@@ -31,7 +31,13 @@ export const GET_POKEMON = gql`
       }
       weaknesses
       fleeRate
+      maxCP
+      maxHP
       image
+      evolutionRequirements {
+        amount
+        name
+      }
       evolutions {
         id
         number
