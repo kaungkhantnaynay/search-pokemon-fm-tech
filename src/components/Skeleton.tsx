@@ -1,7 +1,6 @@
 export function Skeleton() {
     return (
         <div className="space-y-12 animate-pulse">
-            {/* Header Skeleton */}
             <div className="rounded-[2.5rem] bg-white/5 border border-white/10 p-12 h-96 flex">
                 <div className="w-1/2 flex justify-center items-center">
                     <div className="w-64 h-64 bg-white/10 rounded-full" />
@@ -20,13 +19,11 @@ export function Skeleton() {
                 </div>
             </div>
 
-            {/* Grid Skeleton */}
             <div className="grid md:grid-cols-2 gap-8">
                 <div className="h-48 bg-white/5 rounded-[2rem] border border-white/10" />
                 <div className="h-48 bg-white/5 rounded-[2rem] border border-white/10" />
             </div>
 
-            {/* List Skeleton */}
             <div className="space-y-6">
                 <div className="h-10 bg-white/10 rounded-xl w-48" />
                 <div className="grid md:grid-cols-2 gap-8">

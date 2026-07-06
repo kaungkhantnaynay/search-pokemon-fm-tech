@@ -1,57 +1,63 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState, useEffect, useTransition } from 'react';
+import { useTransition } from 'react';
 import { Search, X, History } from 'lucide-react';
 import { useRecentSearches } from '@/hooks/use-recent-searches';
 
 export function SearchInput() {
     const router = useRouter();
     const searchParams = useSearchParams();
-    const initialValue = searchParams.get('name') || '';
+    const inputValue = searchParams.get('name') || '';
     const { recent, clearRecent } = useRecentSearches();
 
-    const [inputValue, setInputValue] = useState(initialValue);
     const [isPending, startTransition] = useTransition();
 
-    useEffect(() => {
-        setInputValue(searchParams.get('name') || '');
-    }, [searchParams]);
-
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = e.target.value;
-        setInputValue(newValue);
-
+    const updateSearch = (name: string) => {
         startTransition(() => {
             const params = new URLSearchParams(searchParams.toString());
-            if (newValue) {
-                params.set('name', newValue);
+            const trimmedName = name.trim();
+
+            if (trimmedName) {
+                params.set('name', trimmedName);
             } else {
                 params.delete('name');
             }
-            router.push(`?${params.toString()}`);
+
+            router.push(params.size ? `?${params.toString()}` : '/');
         });
     };
 
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        updateSearch(e.target.value);
+    };
+
     const handleClear = () => {
-        setInputValue('');
+        updateSearch('');
+    };
+
+    const handleRecentSearch = (name: string) => {
+        updateSearch(name);
     };
 
     return (
         <div className="relative w-full max-w-xl mx-auto group">
             <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                <Search className="h-5 w-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" />
+                <Search className="h-5 w-5 text-gray-400 group-focus-within:text-red-500 transition-colors" />
             </div>
             <input
                 type="text"
-                className="block w-full pl-10 md:pl-11 pr-10 md:pr-12 py-3 md:py-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl md:rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all shadow-xl font-medium text-sm md:text-base"
+                className="block w-full pl-10 md:pl-11 pr-10 md:pr-12 py-3 md:py-4 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl md:rounded-2xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-500/50 focus:border-red-500/50 transition-all shadow-xl font-medium text-sm md:text-base"
                 placeholder="Search Pokémon..."
                 value={inputValue}
                 onChange={handleInputChange}
+                aria-busy={isPending}
             />
             {inputValue && (
                 <button
+                    type="button"
                     onClick={handleClear}
+                    aria-label="Clear search"
                     className="absolute inset-y-0 right-0 pr-3 md:pr-4 flex items-center text-gray-400 hover:text-white transition-colors"
                 >
                     <X className="h-4 w-4 md:h-5 md:w-5" />
@@ -67,6 +73,7 @@ export function SearchInput() {
                             Recent Searches
                         </h3>
                         <button
+                            type="button"
                             onClick={clearRecent}
                             className="text-xs font-bold text-gray-500 hover:text-rose-400 transition-colors"
                         >
@@ -76,8 +83,9 @@ export function SearchInput() {
                     <div className="flex flex-wrap gap-2">
                         {recent.map((name) => (
                             <button
+                                type="button"
                                 key={name}
-                                onClick={() => setInputValue(name)}
+                                onClick={() => handleRecentSearch(name)}
                                 className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-sm font-medium text-gray-300 hover:bg-white/10 hover:text-white hover:border-white/20 transition-all"
                             >
                                 {name}

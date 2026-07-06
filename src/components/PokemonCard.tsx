@@ -3,14 +3,10 @@
 import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ChevronRight } from 'lucide-react';
+import type { PokemonSummary } from '@/types/pokemon';
 
 interface PokemonCardProps {
-    pokemon: {
-        id: string;
-        number: string;
-        name: string;
-        image: string;
-    };
+    pokemon: PokemonSummary;
 }
 
 export function PokemonCard({ pokemon }: PokemonCardProps) {
@@ -29,12 +25,12 @@ export function PokemonCard({ pokemon }: PokemonCardProps) {
             onClick={handleClick}
             className="group relative flex flex-col items-center p-4 md:p-6 rounded-2xl md:rounded-3xl bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl text-left w-full"
         >
-            <div className="absolute top-4 left-4 text-xs font-bold text-white/20 group-hover:text-blue-400/40 transition-colors">
+            <div className="absolute top-4 left-4 text-xs font-bold text-white/20 group-hover:text-red-400/40 transition-colors">
                 #{pokemon.number}
             </div>
 
             <div className="relative mb-4">
-                <div className="absolute inset-0 bg-blue-500/10 blur-2xl rounded-full scale-0 group-hover:scale-110 transition-transform duration-700" />
+                <div className="absolute inset-0 bg-red-500/10 blur-2xl rounded-full scale-0 group-hover:scale-110 transition-transform duration-700" />
                 <Image
                     src={pokemon.image}
                     alt={pokemon.name}
@@ -45,10 +41,10 @@ export function PokemonCard({ pokemon }: PokemonCardProps) {
             </div>
 
             <div className="flex items-center gap-2 group/btn">
-                <h3 className="text-lg md:text-xl font-bold text-white group-hover:text-blue-300 transition-colors">
+                <h3 className="text-lg md:text-xl font-bold text-white group-hover:text-red-300 transition-colors">
                     {pokemon.name}
                 </h3>
-                <ChevronRight className="h-4 w-4 text-gray-500 group-hover:text-blue-300 transform group-hover:translate-x-1 transition-all" />
+                <ChevronRight className="h-4 w-4 text-gray-500 group-hover:text-red-300 transform group-hover:translate-x-1 transition-all" />
             </div>
         </div>
     );

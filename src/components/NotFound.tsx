@@ -16,7 +16,7 @@ export function NotFound({ message = "We couldn't find that Pokémon." }: NotFou
             </p>
             <div className="mt-8 p-4 bg-white/5 rounded-2xl border border-white/10 flex items-center gap-3">
                 <Search className="h-5 w-5 text-gray-500" />
-                <span className="text-sm text-gray-500">Try searching for <strong>"Pikachu"</strong> or <strong>"Charizard"</strong></span>
+                <span className="text-sm text-gray-500">Try searching for <strong>Pikachu</strong> or <strong>Charizard</strong></span>
             </div>
         </div>
     );

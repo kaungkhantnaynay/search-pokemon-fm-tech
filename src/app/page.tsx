@@ -10,7 +10,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ n
       <div className="flex flex-col items-center mb-10 md:mb-16 space-y-4 md:space-y-6">
 
         <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-center tracking-tighter text-white animate-in fade-in slide-in-from-bottom-4 duration-1000">
-          Find Your <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-500">Pokémon</span>
+          Find Your <span className="bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-rose-500">Pokémon</span>
         </h1>
         <p className="text-gray-400 text-base md:text-xl text-center max-w-2xl font-medium leading-relaxed animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-150">
           “Enter a Pokémon name”

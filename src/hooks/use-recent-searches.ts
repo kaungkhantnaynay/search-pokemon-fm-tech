@@ -1,23 +1,22 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 
 const STORAGE_KEY = 'pokemon_recent_searches';
 const MAX_RECENT = 5;
 
 export function useRecentSearches() {
-    const [recent, setRecent] = useState<string[]>([]);
+    const [recent, setRecent] = useState<string[]>(() => {
+        if (typeof window === 'undefined') return [];
 
-    useEffect(() => {
-        const stored = localStorage.getItem(STORAGE_KEY);
-        if (stored) {
-            try {
-                setRecent(JSON.parse(stored));
-            } catch (e) {
-                console.error('Failed to parse recent searches', e);
-            }
+        try {
+            const stored = window.localStorage.getItem(STORAGE_KEY);
+            return stored ? JSON.parse(stored) : [];
+        } catch (error) {
+            console.error('Failed to parse recent searches', error);
+            return [];
         }
-    }, []);
+    });
 
     const addSearch = useCallback((name: string) => {
         if (!name) return;
@@ -25,13 +24,13 @@ export function useRecentSearches() {
         setRecent((prev) => {
             const filtered = prev.filter((s) => s.toLowerCase() !== lowerName);
             const updated = [name.trim(), ...filtered].slice(0, MAX_RECENT);
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+            window.localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
             return updated;
         });
     }, []);
 
     const clearRecent = useCallback(() => {
-        localStorage.removeItem(STORAGE_KEY);
+        window.localStorage.removeItem(STORAGE_KEY);
         setRecent([]);
     }, []);
 
